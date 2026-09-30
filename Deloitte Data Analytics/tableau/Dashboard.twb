@@ -3,11 +3,14 @@
 <!-- build 20262.26.0912.1023                               -->
 <workbook _.fcp.WorkbookFingerprinting.true...author-id='8766cff287e2b35310d9b926a4947418becf56963e751ecaca9a445969e588f9' _.fcp.WorkbookFingerprinting.true...creator-author-id='8766cff287e2b35310d9b926a4947418becf56963e751ecaca9a445969e588f9' _.fcp.WorkbookFingerprinting.true...creator-license-type='free' _.fcp.WorkbookFingerprinting.true...creator-machine-id='935671dfb983ef7352352fc6b37b7da6d4dfd9c489251bc1019711ca8ec36de6' _.fcp.WorkbookFingerprinting.true...license-type='free' _.fcp.WorkbookFingerprinting.true...machine-id='935671dfb983ef7352352fc6b37b7da6d4dfd9c489251bc1019711ca8ec36de6' original-version='18.1' source-build='2026.2.3 (20262.26.0912.1023)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
+    <AccessibleZoneTabOrder />
     <AnimationOnByDefault />
+    <AutoCreateAndUpdateDSDPhoneLayouts />
     <MarkAnimation />
     <ObjectModelEncapsulateLegacy />
     <ObjectModelTableType />
     <SchemaViewerObjectModel />
+    <SetMembershipControl />
     <SheetIdentifierTracking />
     <WindowsPersistSimpleIdentifiers />
     <_.fcp.WorkbookFingerprinting.true...WorkbookFingerprinting />
@@ -260,6 +263,13 @@
           </formatted-text>
         </desc>
       </column>
+      <column-instance column='[deviceType]' derivation='None' name='[none:deviceType:nk]' pivot='key' type='nominal' />
+      <column-instance column='[factory]' derivation='None' name='[none:factory:nk]' pivot='key' type='nominal' />
+      <group caption='Action (Factory)' hidden='true' name='[Action (Factory)]' name-style='unqualified' user:auto-column='sheet_link'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[factory]' />
+        </groupfilter>
+      </group>
       <folders-common>
         <folder name='Daikibo-Telemetry-Data'>
           <folder-item name='[Document Index (generated)]' type='field' />
@@ -278,6 +288,53 @@
         </folder>
       </folders-common>
       <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='false' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:factory:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;daikibo-berlin&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
+              <bucket>&quot;daikibo-shenzhen&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;daikibo-factory-seiko&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;daikibo-factory-meiyo&quot;</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[none:deviceType:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;AirWrench&quot;</bucket>
+            </map>
+            <map to='#59a14f'>
+              <bucket>&quot;HeavyDutyDrill&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
+              <bucket>&quot;Furnace&quot;</bucket>
+            </map>
+            <map to='#9c755f'>
+              <bucket>&quot;SpotWelder&quot;</bucket>
+            </map>
+            <map to='#b07aa1'>
+              <bucket>&quot;LaserWelder&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;ConveyorBelt&quot;</bucket>
+            </map>
+            <map to='#edc948'>
+              <bucket>&quot;LaserCutter&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;CNC&quot;</bucket>
+            </map>
+            <map to='#ff9da7'>
+              <bucket>&quot;MetalPress&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -292,6 +349,24 @@
       </object-graph>
     </datasource>
   </datasources>
+  <actions>
+    <action caption='Highlight 1 (generated)' name='[Action1_B8E2372408AB47FC9A0BFB8062DC20C2]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Downtimes by Factory and Device Type' type='sheet' />
+      <command command='tsc:brush'>
+        <param name='field-captions' value='Factory' />
+        <param name='target' value='Downtimes by Factory and Device Type' />
+      </command>
+    </action>
+    <action caption='Filter 1 (generated)' name='[Action2_53285925C9AF489D83B9500D3AC9516E]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Downtimes by Factory and Device Type' type='sheet' worksheet='Downtime Per Factory' />
+      <command command='tsc:tsl-filter'>
+        <param name='special-fields' value='all' />
+        <param name='target' value='Downtimes by Factory and Device Type' />
+      </command>
+    </action>
+  </actions>
   <worksheets>
     <worksheet name='Downtime Per Device Type'>
       <layout-options>
@@ -317,6 +392,13 @@
                 </formatted-text>
               </desc>
             </column>
+            <column caption='Factory' datatype='string' name='[factory]' role='dimension' type='nominal'>
+              <desc>
+                <formatted-text>
+                  <run>location.factory</run>
+                </formatted-text>
+              </desc>
+            </column>
             <column-instance column='[deviceType]' derivation='None' name='[none:deviceType:nk]' pivot='key' type='nominal' />
             <column caption='Status' datatype='string' name='[status]' role='dimension' type='nominal'>
               <desc>
@@ -327,6 +409,12 @@
             </column>
             <column-instance column='[Calculation_0202910549000192]' derivation='Sum' name='[sum:Calculation_0202910549000192:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
+          <filter class='categorical' column='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[Action (Factory)]'>
+            <groupfilter function='member' level='[factory]' member='&quot;daikibo-factory-seiko&quot;' user:ui-action-filter='[Action2_53285925C9AF489D83B9500D3AC9516E]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[Action (Factory)]</column>
+          </slices>
           <aggregation value='true' />
         </view>
         <style>
@@ -428,8 +516,153 @@
       <simple-id uuid='{781A44A2-BE7F-4AF4-B8EE-0CFC6064EB8D}' />
     </worksheet>
   </worksheets>
+  <dashboards>
+    <dashboard enable-sort-zone-taborder='true' name='Downtimes by Factory and Device Type'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontsize='22'>&lt;Sheet Name&gt;</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <style />
+      <size sizing-mode='automatic' />
+      <zones>
+        <zone h='100000' id='4' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98678' id='18' param='vert' type-v2='layout-flow' w='99496' x='252' y='661'>
+            <zone h='4955' id='19' type-v2='title' w='99496' x='252' y='661'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='93723' id='16' param='vert' type-v2='layout-flow' w='99496' x='252' y='5616'>
+              <zone h='93723' id='14' param='vert' type-v2='layout-flow' w='99496' x='252' y='5616'>
+                <zone h='93723' id='7' param='horz' type-v2='layout-flow' w='99496' x='252' y='5616'>
+                  <zone h='93723' id='5' type-v2='layout-basic' w='95341' x='252' y='5616'>
+                    <zone h='46859' id='3' name='Downtime Per Factory' w='95341' x='252' y='5616'>
+                      <zone-style>
+                        <format attr='border-color' value='#000000' />
+                        <format attr='border-style' value='none' />
+                        <format attr='border-width' value='0' />
+                        <format attr='margin' value='4' />
+                      </zone-style>
+                    </zone>
+                    <zone h='46864' id='9' name='Downtime Per Device Type' w='95341' x='252' y='52475'>
+                      <zone-style>
+                        <format attr='border-color' value='#000000' />
+                        <format attr='border-style' value='none' />
+                        <format attr='border-width' value='0' />
+                        <format attr='margin' value='4' />
+                      </zone-style>
+                    </zone>
+                  </zone>
+                  <zone fixed-size='132' h='93723' id='6' is-fixed='true' param='vert' type-v2='layout-flow' w='4155' x='95593' y='5616'>
+                    <zone h='9414' id='8' name='Downtime Per Factory' pane-specification-id='0' param='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:factory:nk]' type-v2='color' w='4155' x='95593' y='5616'>
+                      <zone-style>
+                        <format attr='border-color' value='#000000' />
+                        <format attr='border-style' value='none' />
+                        <format attr='border-width' value='0' />
+                        <format attr='margin' value='4' />
+                      </zone-style>
+                    </zone>
+                    <zone h='18085' id='10' name='Downtime Per Device Type' pane-specification-id='0' param='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:deviceType:nk]' type-v2='color' w='4155' x='95593' y='15030'>
+                      <zone-style>
+                        <format attr='border-color' value='#000000' />
+                        <format attr='border-style' value='none' />
+                        <format attr='border-width' value='0' />
+                        <format attr='margin' value='4' />
+                      </zone-style>
+                    </zone>
+                  </zone>
+                </zone>
+              </zone>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <layout-options>
+            <title>
+              <formatted-text>
+                <run fontsize='22'>&lt;Sheet Name&gt;</run>
+              </formatted-text>
+            </title>
+          </layout-options>
+          <size maxheight='800' minheight='800' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='21' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98678' id='20' param='vert' type-v2='layout-flow' w='99496' x='252' y='661'>
+                <zone h='4955' id='19' type-v2='title' w='99496' x='252' y='661'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='46859' id='3' is-fixed='true' name='Downtime Per Factory' w='95341' x='252' y='5616'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='9414' id='8' name='Downtime Per Factory' pane-specification-id='0' param='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:factory:nk]' type-v2='color' w='4155' x='95593' y='5616'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='46864' id='9' is-fixed='true' name='Downtime Per Device Type' w='95341' x='252' y='52475'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='18085' id='10' name='Downtime Per Device Type' pane-specification-id='0' param='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:deviceType:nk]' type-v2='color' w='4155' x='95593' y='15030'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{B65CE73D-6C42-4DCE-ACF0-5E06CA12B96C}' />
+    </dashboard>
+  </dashboards>
   <windows saved-dpi-scale-factor='1.25' source-height='37'>
-    <window class='worksheet' maximized='true' name='Downtime Per Factory'>
+    <window class='worksheet' name='Downtime Per Factory'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -503,6 +736,50 @@
         </highlight>
       </viewpoint>
       <simple-id uuid='{40A55CBE-C03A-4092-8875-EED4415EF68E}' />
+    </window>
+    <window class='dashboard' maximized='true' name='Downtimes by Factory and Device Type'>
+      <viewpoints>
+        <viewpoint name='Downtime Per Device Type'>
+          <zoom type='entire-view' />
+          <highlight>
+            <color-one-way>
+              <field>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:deviceType:nk]</field>
+            </color-one-way>
+          </highlight>
+        </viewpoint>
+        <viewpoint name='Downtime Per Factory'>
+          <zoom type='entire-view' />
+          <selection-collection>
+            <tuple-selection>
+              <tuple-reference>
+                <tuple-descriptor>
+                  <pane-descriptor>
+                    <x-fields>
+                      <field>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:factory:nk]</field>
+                    </x-fields>
+                    <y-fields>
+                      <field>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[sum:Calculation_0202910549000192:qk]</field>
+                    </y-fields>
+                  </pane-descriptor>
+                  <columns>
+                    <field>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:factory:nk]</field>
+                    <field>[federated.17pgsgc0guqwsr1h2nko11yj18ww].[sum:Calculation_0202910549000192:qk]</field>
+                  </columns>
+                </tuple-descriptor>
+                <tuple>
+                  <value>&quot;daikibo-factory-seiko&quot;</value>
+                  <value>480</value>
+                </tuple>
+              </tuple-reference>
+            </tuple-selection>
+          </selection-collection>
+          <highlight field='[federated.17pgsgc0guqwsr1h2nko11yj18ww].[none:factory:nk]'>
+            <bucket-selection />
+          </highlight>
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{F0DA6E0C-DF84-480F-BAEE-1733ECFB1CD1}' />
     </window>
   </windows>
   <thumbnails>
@@ -719,6 +996,118 @@
       x7UOlKGkBAvTS1sJjgc9hCJROtvaePhwmB279xJfVYKLpAQLE0rpCTFDd/p5MuvGf7OP/RX7
       +eVfehswyMnJ542tpcQ8k1zr6CQaTdB4SNYEC/N55c8JThgJLBYpwcKcXvlzgpfvDSSEGUkI
       ExlNBkBktLSW4OW7Qcf1xMp2wO+TEixM638AhpZib49c5X8AAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='Downtimes by Factory and Device Type' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAABJ0AAASdAHeZh94
+      AAAWwklEQVR4nO3deWyc933n8fczF2d4zfA+dVAnZV3ULceWJSuuncSbbGrHwSYtuun+ESDY
+      Fi2KoigK9MBisdtsvWl2sS2SYHe9Wafb1Ena1Ensxpatw9RBiofEm6LE+xwOh3ORcz7Pb/8Y
+      mZYlS7QyI3Gs5/sCBOGZ6/kNwQ9/z/P8vs/vpymlFEKYlGWtGyDEWpIACFOTAAhTkwAIU5MA
+      CFO7IwCJpQDNzc00NzfTOziMcZ8XifRElLfeOX3H4xdPv0kw9qs39F7G+1vpHfM9mA8Xj7Q7
+      AhCeucaZziEKCwsZ62vlP738N8T1jx8CZaQYHhm54/HJ0SFiemaNvZvg/DTzweUH8+HikWb7
+      qAdr6htoamqiqamJ+nOv84tzV3jhxF7OnfoFAyMzYHXwxRdfotKTz1D3ZU5fvIJmtfO5L7xA
+      VZGFaGSRH//9q0zO+jhy8nke37sNZeicfet15iZGqN/WxL9+7ik04MrFd7l0dQhHfjFf/vKX
+      KHI56G5r5lJHHwYaTz/3ebZtqKbnSht1m7Zz7l/+mQ17jrF3ay2n3nyd4akFAjM3OPLC/of8
+      oxOPBHUb31CL+p//eHplOxn1qr/+768oZehqanpaGUqpkHdMfetvX1FKT6i/evlbKqkbKhGN
+      KJ8/pJLRkPqTP/ljNR8IKz0VUy+//G2llFI//N7LqvPGnDIMQ73x999VZ6+OqLnhK+p/vPIT
+      pRtKecf71be/8wOllFIz01MqpRsqEQ2p//zNbyldKfWjV7+jvvXX/01d7hlSKV1Xb/3k++qt
+      iz3KUEq1n3pNnb46dvtXEWJVH9kDfIiho1ltKDR8E0O89dbbFDgdBMNh0KxsKHPy3e/9Lw4c
+      OsqhfTtRiQjrGrZS7i4EdJx5VgAsNjs1VZVoGjx58gQ/OtVPIm+eY08/j0WDinXbscR/SQpF
+      PLzAD375Fs78fPyBEDqAnuTYZ1/k4PY6AAanAnzj13eiAXa7/UH9fRCPuHsGQCnF5bOn2b7/
+      IJHZQc70ePmd3/4tNCPBzHf/D2gWXvraN4gth2ltfodXfzLBb37+yVV3GlpYwFVcjMsSYjka
+      u7kvg5SuULEwP37jDL/7O/8eh83CgvdvbrbUSU1l2QdtMwyUUqBpv/q3F6b3kQEYudbL2bMw
+      cWOQgOHmG59pJO4bJuz3Mjpyna72VnyhGEYqwU//6R/Ztf8IDocDu8161x0pPcWVjjaq8nV+
+      8ca7fP33/5BCfRPf/s7fUfrSi4x0X6Rm6z4smoVkdInxsVGGB7u5Nj73kZ+3e1MlP/jRzzm8
+      awNnzrey+3k5BxD3T1Pqw9c5U7EI/UMjgEZlTT1V5Z6bzygmhgfpvzFF04GDGMkY1VVVLM7P
+      0Hm1m4KSGg7u34VFGXh9C1RVVgKK2dk5qqurCSz6mBwfJxxNsXP3HooLnACE/F5aLndQVtvA
+      vl3b0TRYmJug/eoA23buwWVVVFZX4/d5KfKU47ClL1wpZTDQ1cFMIMauHVtxFnoozs97iD86
+      8Si4IwBCmImMBAtTkwAIU5MACFOTAAhTkwAIU5MACFOTAAhTkwAIU5MACFOTAAhTkwAIU5MA
+      CFOTAAhTkwAIU5MACFOTAAhTkwAIU1uTAMhNaCJXrD4tSpYppdB1HYtFOh+x9tYkALf+L8Ra
+      eugBsFgsKKWwWu8+hYoQD4schwhTkwAIU5MACFOTAAhTkwAIU5MACFPLSgCUUitriSmlMAwD
+      wzBQKr0di0YxDLnuL3JPFsYBFANXWxkPGjx3/HFams9gyStAs9jY07SPgc4LLOk2IpEYn/70
+      U1hlPn+RQzLuAZYWZwkZLpyaASgSysrBgwc5dHA/Di2Bf1nxqaNH2FzlYsK3lIUmC5E9GfUA
+      ytBpv3qNx499igvnW0EpPIVOWlsuEYzEOPbEYewOBwCe4kKmI8vopa6bh0dySCTWXkYBWA54
+      CS1FudjczND1UTZv38HufYfQNI3h7hZmAjESiQQAgWCY4tr1KyUQUgohckFGASgoreFfPV8D
+      RgqHq4ja8mIuvncau6uYBX+Yp3eUsjxt4UJLC0tLcU7uLsxWu4XIiqyvEKOUIpVKYbPZ0DQN
+      lCKZTGK127HcPAHWdV16AJET1mSJJAmAyBUyECZMTQIgTE0CIExNAiBMLSu3RE4NDzC2mOJT
+      B3YxMtjN6MwCzqJSjh7Yw/hQL8NT8+QVeHj8UBNSCCFyScY9QDIW5sb0IomlIEpPMjzt58SJ
+      E+QnF/GFlrk+Mc+JEycoJsJsMJaNNguRNZmVQihFR3sH+w4coeNyO3oqitNZhAZUlZfg9fnJ
+      c+WjATUVJcwshqgstEsphMgZmZVC+Ke4MeElnrrI0PVRGjY3oOvp0odoLI6r1IkvpadfG4vj
+      dDukFELklIwOgQrK6vnqv3mJp44dY+vWbayvrUFLhBi6McLg5CLrqsuwpSJcuzFM7+g86yrd
+      2Wq3EFmRnZFgpYgnEuTl5aGnkni9Xjxllbjy7Bh6krk5L+7SCvKd6cpQGQkWuUJKIYSpyTiA
+      MDUJgDA1CYAwNQmAMLXMAqAUgQUvPT09+BZDAISDfsbHx5mYnCRlQCoRpbenm4VgJBvtFSKr
+      MgqAUgZen5/6+nq6Ws4RiBl0dHRitVpvXuVRNJ87R3lVLZ2XmllOGllqthDZkdFIsGax0tDQ
+      QGDRD/Z8nDaIRWPohkFZaTkWPYbmclNVUYbeUMOEN8DWGs/KKjFCrLWMq0Hjy2GGh4fBmh7k
+      OnT4EMvRKO+9+zaHnjiGRUt3Mg67jVRKT98nDCv/C7GWMpwXKIW9wMORx59gtPcyE94gNe4C
+      SssrCc9NEElCfDmCUjAx66N+91Y0TUPTNFkjTOSEjAPQdqkVq92Bsjg41FhMT2cry0mw5blp
+      LHeTt30DzeebKXBXU17oyFa7hcgKKYUQpibHIcLUVg3A6FAfY9PzD6MtQjx0q54DuJx5/Pxn
+      r+FdXGLHnv2cOPYpPEX5D6NtQjxwq54DKGUwPNDFz37xJrP+KGXFDk6+8Nsc2Fb3K+9UzgFE
+      rli1B7h06nU6x0K8+Jtfp76qlGR4jvaR8MrzytAJhSMUFhVhvbkIdjgUpKDIjdWirWznFxZj
+      s8oph8gtq/YAI31tfP+Hr2MAmtXG7/3Rn1HqSj+nDJ221kvkFRQzMTbO0899lu5LZ7AVluL1
+      LvDssyfpvHAWXG7mvT6eefYZ7BZNegCRM1bvAc6+w0tf/wMaStPX8J3OD57TLFYOHX0CZeiE
+      fbMkEzGiODmxr4nrXS1MegOEdTtP79/HaG8bE/NhNlUVP7AvI8T9umsAlJHkjZ/+lIVwjNd/
+      /Bpb6krQLFY+8/kXuHU8KzA/zfmLLTjctbisKey2dEKK8l34IkvY7fb0dmE+09EYul4g06KI
+      nHH3HkDTqF23nvK69bc8ZsF222G8p6KW57/wRUZ72xjzxYnH0+uALQRClG7exNz4cHrbH6Rk
+      w0aZFkXklLuelWqajX2HjhCeHqRqyz6OHDlCeHqA6cAHs7vpiQin3z1Da+tlrs+Gqa8qo9qT
+      R/P5C3jjDqo9BdSV5fPe+QtMRTRqS+Tyqcgt9zwJ7jz/Fn/7vVfwrGvE7bQy5/XzF3/5V5Tl
+      f/DX+/11gS0WC5qWvuqjlFopeuPmGsIr28hlUJE77hmAVDJJ+/m3qX7sSSqL7Fhtdhz2zOfT
+      lQCIXHHXACgjwWuvvkokdcuLLVa+9NWvUZyX2U4lACJX3D0AymB+bg79tmcrqmruOBG+XxIA
+      kStWHQibGOzglf/3Txg2F5rS+b0/+lM8znu9Y3USAJErVj2gP3fqNL/xb7/K5cEgrkA/8WQS
+      nPaH0TYhHrhVA7ChYR1xWwkjrT8kGAmz99kUcDMAyqC99QLLSYgnUjx1/Dh9HZeI6RoWq429
+      +w4yPtjJxHwQiy2f408elhViRE75GNWgikRsmQX/IkllZX19zcovsVKKRDJJnsNBf1sz7i2H
+      uNHdyrFjx9LP60nePXeRk08/xWDHBQo37qO+1CWHQCJnrNoDvPOT7zNnKSe6FKbKEkZ97mts
+      LEnXQmiahk0zeO/0KSo2bKfG7SBS6qa15SJeX4Djx58kz+lEAypKPcyEwtS4HVIKIXLGqgFY
+      WFzi4Gc/R9t7p5iammPvrccwyqD57Fn2HD1OSaETpRRbduzCYrEw3N2CN5QgHkuPHPv8ATwb
+      G6QUQuSUVQPwxa98hVf+9yuMzfp5/OnPsc7zQSWcoScJhMJ0d7QCGnv2HaCv8xKaPZ/lWJLj
+      O0sx/IWcaz6Podk5XuJ6kN9FiPu26jlAcH6KN98+Q8pQaBYrX3jxKxTdYyDs1o97vxRC3bqN
+      XAYVuWPVHuDn//B/8ex6hjqPHTQNxyq/t3fM+KZpcuVH5Ky7jukqpXOtv5f8YjdL0Rh2ux2H
+      3YHMaCgeJXfvAZTOlcstRFJOmBmiZSZdC1S/eceqvYAQnxR3vx/A4uDLv/Xv+PXnnyHPbsNm
+      S/+TDkA8SlY9B3jjR39H6d5nqXN/vHMAIT5JVg3Alq0NDAfD1HvK0DQLH+oClOLGYA8zviDW
+      vEKOHGxifvIGfTcmKauqY8+OLcxPjdAzNEZJRS1NO7c9wK8ixP1btbC5pGYTcd8o7e3ttHd0
+      EL/l/gCFoqishieeeIJS2xIzi0t0DY5x4vhTxHzjLC7HudI/wonjxzGC0/giiQf5XYS4b/fo
+      ARQ9HS3MLISpq6tDs9rYuWffh26G0TQLFeVlBH0zDHtjPN1o4Cpwo2ka66rLmJnz4cwvRNM0
+      1tdUMLcQpMRVKqUQImfc8xDImV9A0c0/2qn4Mt/8D3/On/7lf6Us//23KcaudTPmT/LcsydR
+      yWWUkV76KJXSsTttKJVeFyyZSmFzWaUUQuSUewRAY0vjbra8v6kUs9evMD4XoqyhNP2QnqJr
+      YIRDhw8zNztLWXkF8cgCgVCEgbE5jv1aExP9nSyGwvQNT/P4yd0P/AsJcT/uUQqhePuf/4GB
+      8fTU6Hoiyo2pIN/8L/+RfFv6TFgZKUaHR0gpAI36DRuxGXH6B4eo27iFMnchqfgyfQPXqF2/
+      mfKSovRnSSmEyBH3DMCCd46lWPoYyO5wUlVVgSULQ8ESAJErZIkkYWoyX7kwNQmAMDUJgDC1
+      jAOglMHk6AiJ9OV+fLNT9PT00NvXT0KH2FKQixfOMzm3kOmuhMi6DAOg6O5opbWllWh6/Ive
+      gSE2btzIhvXrsWkGzecv0XTgMDe62wjH9cxbLEQWZTjTrcaeA0cx4vH0pjJYCgUYHR2jum4d
+      +ak4jgIPrjw7jRtrmPQG2FbrkVIIkTMyn+r5VprGyV97lkQiTtvF99h56ImVO8gsNxfQk1II
+      kUsyOgR6f20A4/3/dZ3IcpTCIjdl7gJSmo3YUpiUYTA85aWm3JOtdguRFRkNhCnDYKC3i0B4
+      CbvTxabN2/FOXCMQiVPgKWd34xYC81P0XhujtKqOHVs2ADIQJnKHjAQLU5NxAGFqEgBhahIA
+      YWoSAGFqmQdAKWLR5ZW1xAw9xdTkJLFEcmV7emqSaDyZ8a6EyLaMSyF6Olv58Q9fS68mqRTn
+      z75LJBrj3VPvkjQUF987TWg5xpl33iF++4p7QqyxjEeCH2s6ROrmGgB6KobhKGb71i044otM
+      zC6QtBbSuHULBXqIcW+QLdVuACmFEDkh41ogi+WDWySVkcRmTa8f4HLmsRCLYbNZV7aD8cTK
+      6LEQuSCrtUBWm4tYNIxSijnfIrWPbWF29DpKwdz8ImXbNt9REyTEWsqsFsgw6O3qwBdaou9K
+      G/5IkobaEprPX2DZXkJFcT5b6st573wzQQqpdme4wLAQWSalEMLUZBxAmJoEQJiaBECYmgRA
+      mJoEQJhadu8JBga6OwksxbFYbezddxDfxCDXxmYocJdzaN8uWWNM5JQs9wAK72KYo0ePcvjQ
+      QRyWFP3D05w4cQJnwo83FM/u7oTIUHZ7AKVQiSgXL5zH6nKz/7FNOPML0IDaqjJm/SHKC2SF
+      GJE7sjwtioXjzzwHKPrbmpnwL6Pr6cmw4vEEjiKbTIsickpWD4EMPUlH22VmZ+eYnA9R4naj
+      xcOMT03TOzLH+kqZFkXklqyXQkQjIWa8PsoraygudKEn44xPTFJWVUtxgQuQUgiRO6QWSJia
+      jAMIU5MACFPL+kDYWhuZ8q1ceRLidmWeQkqKC1a2H7kAJFMpUrrccik+mn7b7bhyCCRMTQIg
+      TO2hHwLpuv5AZ4UocDnQ5RBI3IXdavnQOaKMAwhTW5MACJEr5Bwg1yh1z0pZpRR3Pn3v99z+
+      /o/7OjP8bZQA5Bql03ml646HQ75pZv1h+tpb0vOw3nTt2jVAp6Wl/WN9fEtLy8d6nREL0dY1
+      QCq+xPDY5Md6zyfRIzcO8EmllGJ8ZIjFYIRAJIGRjNPXP0BKWXls52M4nPkozUEiEUcBkYAP
+      3V6Ex5OusA365+nuukphSRUN66rxe6cZnZylel0DtRUlK/sJBxbo6bqKs7iczRvrWPROMzY1
+      R/3GzZQU2AmEY8zPTbOhvpp4IoHFaqOosJBYZJGpuUXCoSD1m7ZR7i64yzf5ZJEeIEfMj/Uz
+      t2xl+7at2G3p6SPrN26ipiyP9quDhOcnmVoIAxBfDtLefY0Cl4P+/n4ADKWxdXsjk0PdBCNL
+      dPZeZ9euXVzv7iCaNNB1HaUUuqHYvK0R39gAC4EQXQMj7Nq1k96rncSXA/zyX94m312B3Zq+
+      edWILzE4PE7QO87EYoLGxs309fSt2c8p2yQAOWJm2s+OxzbjcrmwWTQCvhm6e/qZ84XRU9GV
+      1xmpGG/+7Oc0NO7CdsvExPmFRTjz8qip8LAYWKCwuBKHw0FFSQFer5f29nbmAxFcBUW4nHnU
+      V5Wz4Pfh8/m4erULTbOSUrB5xx421FWiaXfevV1VVYXTlY/9EfqteYS+yidbbX0F7S0dDN+4
+      zlIsxaLPi7uiCpumMG45F7XYnHzhS19mrLcNf/iDYESCi0yMjTI8G6a2uoaIf5zJqUkmfcvU
+      1lRx+PBhKkuKiIYDjI+P0T8xz4b6OjyFLiqrqikrLcWqpRc0NxO5DJojlFIE/T6S2CguzMdh
+      tzE3O0uBuwSH3YbNomFgQelJbA4nGEkSKUDpOJ15LIXDhJaWKSsrx2G3kYxHmfX6KK+sxpVn
+      X9nPciREKLJMSWk5eQ4byUQM38IixZ4SXHl2kimDPIcdZRgkkikcdiuJlI7NAgY27DaNeDxB
+      Xl7e2v2wskgCIEzNXP2dELeRAAhTkwAIU5MACFOTAAhTkwAIU5MACFOTAAhTkwAIU5MACFOT
+      AAhTkwAIU5MACFOTAAhTkwAIU5MACFOTAAhTW5MAPMi5QYW4H2s2Oa6EQOSChx4AWSdY5BI5
+      BxCmJgEQpiYBEKYmARCmJgEQpiYBEKYmARCmlpVxgIB3konFBLu3b2J0qB/vYhiL1cbuvfuJ
+      +MbpHhyhrGoduxs3ZWN3QmRNxj2AoSe42ncd39wMAOMz8xw4cIB9TU04LDod3UM8dewp4r5R
+      FpaSGTdYiGzKsAdQ9HS08VjTAfq6ukAZxCNB2i63UlhaQ+PGSpwFRVgsGhvqKpn1BfA4SzEM
+      wxQLsIncl1EAlvwztPeN0Jg0GB4eZuuOnXz6M8+jlKLr0lmm3EUola750XUDq90qpRAip2QU
+      gHxPNb/xlZdA6UTjBpWefAYHBtjY0EA4GmddfgHJpQChpWX6h6c5fGJXttotRFZkZ4EMZeBf
+      DFJS4mFxfpaxqVmq6zdQU1FKIhqmt3+ImvWbqC5Pr2goK8WLXLEmK8RIAESukHEAYWr/H9we
+      ef8OUC6tAAAAAElFTkSuQmCC
     </thumbnail>
   </thumbnails>
 </workbook>
